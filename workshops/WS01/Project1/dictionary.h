@@ -1,17 +1,15 @@
-#pragma once
 #ifndef SENECA_DICTIONARY_H
 #define SENECA_DICTIONARY_H
 
+#include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <iostream>
+#include <sstream>
 #include "settings.h"
 
-
-
-
 namespace seneca {
+
     enum class PartOfSpeech {
         Unknown,
         Noun,
@@ -21,7 +19,7 @@ namespace seneca {
         Verb,
         Preposition,
         Conjunction,
-        Interjection,
+        Interjection
     };
 
     struct Word {
@@ -30,60 +28,51 @@ namespace seneca {
         PartOfSpeech m_pos = PartOfSpeech::Unknown;
     };
 
+    //manage dynamically allocated objects 
     class Dictionary {
-        Word* m_words{ nullptr };
-        size_t m_size{ 0 };
-        size_t m_capacity{ 0 };
 
-        void resize();
+    private:
+ 
+        //stores number of words
+        size_t m_size = 0;
+        //dynamically allocate array for stiring words
+        Word* m_words = nullptr;
 
     public:
 
         //default constructor
-        Dictionary();
+        Dictionary() {};
 
-        //constructor to load dictionary file
+        //copy constructor
+        Dictionary(const Dictionary& other);
+
+        //copy assignment operator
+        Dictionary& operator=(const Dictionary& other);
+
+        //move constructor
+        Dictionary(Dictionary&& other) noexcept;
+        
+        //move assignment operator
+        Dictionary& operator=(Dictionary&& other) noexcept;
+        
+        // Loads words & definitions from file
+        void loadFromFile(const char* filename);
+
+        //string to determine the part of speech
+        PartOfSpeech parsePartOfSpeech(const std::string& pos);
+
+        //constructor to initialize dictionary
         Dictionary(const char* filename);
 
         //destructor
         ~Dictionary();
 
-        //method to search word 
+        //function to search word
         void searchWord(const char* word);
+
+
     };
-}
 
-#endif // DICTIONARY_H
+} // namespace seneca
 
-//namespace seneca {
-//	enum class PartOfSpeech
-//	{
-//		Unknown,
-//		Noun,
-//		Pronoun,
-//		Adjective,
-//		Adverb,
-//		Verb,
-//		Preposition,
-//		Conjunction,
-//		Interjection,
-//	};
-//	struct Word {
-//		std::string m_word;
-//		std::string m_definition;
-//		PartOfSpeech m_pos = PartOfSpeech::Unknown;
-//	};
-//
-//	class Dictionary {
-//		std::vector<Word> m_words;
-//		Word* words{}; //
-//
-//	public:
-//		PartOfSpeech parsePOS(const std::string& pos);
-//		Dictionary() = default;
-//		Dictionary(const char* filename);
-//		void searchWord(const char* word);
-//	};
-//
-//}
-//#endif // !DICTIONARY_H
+#endif

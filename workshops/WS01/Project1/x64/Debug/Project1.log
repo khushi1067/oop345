@@ -1,47 +1,8 @@
-﻿  Settings.cpp
-  dictionary.cpp
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(89,31): error C2597: illegal reference to non-static member 'seneca::Settings::m_show_all'
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\settings.h(16,8):
-  see declaration of 'seneca::Settings::m_show_all'
-  
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(89,31): error C2451: a conditional expression of type 'unknown' is not valid
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(89,31):
-  ill-formed reference to a non-static member
-  
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(92,89): warning C4551: function call missing argument list
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(92,35): error C2597: illegal reference to non-static member 'seneca::Settings::m_verbose'
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(92,35):
-  see declaration of 'seneca::Settings::m_verbose'
-  
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(92,35): error C3867: 'seneca::Settings::m_verbose': non-standard syntax; use '&' to create a pointer to member
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(92,35): error C2568: '&&': unable to resolve function overload
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(93,48): error C3861: 'toString': identifier not found
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(101,97): warning C4551: function call missing argument list
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(101,43): error C2597: illegal reference to non-static member 'seneca::Settings::m_verbose'
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(101,43):
-  see declaration of 'seneca::Settings::m_verbose'
-  
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(101,43): error C3867: 'seneca::Settings::m_verbose': non-standard syntax; use '&' to create a pointer to member
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(101,43): error C2568: '&&': unable to resolve function overload
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(102,53): error C3861: 'toString': identifier not found
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(111,89): warning C4551: function call missing argument list
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(111,35): error C2597: illegal reference to non-static member 'seneca::Settings::m_verbose'
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(111,35):
-  see declaration of 'seneca::Settings::m_verbose'
-  
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(111,35): error C3867: 'seneca::Settings::m_verbose': non-standard syntax; use '&' to create a pointer to member
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(111,35): error C2568: '&&': unable to resolve function overload
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(112,48): error C3861: 'toString': identifier not found
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(125,21): error C2601: 'toString': local function definitions are illegal
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\dictionary.cpp(84,51):
-  this line contains a '{' which has not yet been matched
-  
+﻿  dictionary.cpp
   event.cpp
-C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\event.cpp(7,20): error C2084: function 'seneca::Event::Event(const char *,const std::chrono::nanoseconds &)' already has a body
-  C:\sem 3\OOP345\workshops\OOP-Workshops\Workshops\WS01\Project1\event.h(26,9):
-  see previous definition of '{ctor}'
-  
   logger.cpp
+  Settings.cpp
   tester_1.cpp
   timemonitor.cpp
   Generating Code...
+  Project1.vcxproj -> C:\oop 345 workshops\oop345\workshops\WS01\Project1\x64\Debug\Project1.exe
