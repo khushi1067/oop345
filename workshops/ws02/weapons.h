@@ -1,4 +1,3 @@
-
 #ifndef SENECA_WEAPONS_H
 #define SENECA_WEAPONS_H
 

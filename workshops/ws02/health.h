@@ -1,4 +1,3 @@
-#pragma once
 #ifndef SENECA_HEALTH_H
 #define SENECA_HEALTH_H
 

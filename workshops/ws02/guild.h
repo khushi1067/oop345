@@ -2,7 +2,16 @@
 #ifndef SENECA_GUILD_H
 #define SENECA_GUILD_H
 
+#include "abilities.h"
+#include "archer.h"
+#include "barbarian.h"
 #include "character.h"
+#include"characterTpl.h"
+
+#include "health.h"
+#include "rogue.h"
+#include "team.h"
+#include "weapons.h"
 #include <iostream>
 #include <string>
 

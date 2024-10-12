@@ -4,7 +4,16 @@
 
 #include <iostream>
 #include <string>
-#include "Character.h"
+#include "abilities.h"
+#include "archer.h"
+#include "barbarian.h"
+#include "character.h"
+#include"characterTpl.h"
+#include "guild.h"
+#include "health.h"
+#include "rogue.h"
+
+#include "weapons.h"
 
 namespace seneca {
 
