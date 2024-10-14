@@ -1,3 +1,4 @@
+
 #pragma once
 #ifndef SENECA_TEAM_H
 #define SENECA_TEAM_H
@@ -33,7 +34,7 @@ namespace seneca {
 
     public:
         // Default constructor
-        Team();          
+        Team();
 
         // Constructor with team name
         Team(const char* name);

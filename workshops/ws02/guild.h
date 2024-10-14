@@ -1,46 +1,62 @@
-#pragma once
 #ifndef SENECA_GUILD_H
 #define SENECA_GUILD_H
 
-#include "abilities.h"
-#include "archer.h"
-#include "barbarian.h"
 #include "character.h"
-#include"characterTpl.h"
-
-#include "health.h"
-#include "rogue.h"
-#include "team.h"
-#include "weapons.h"
-#include <iostream>
 #include <string>
 
-namespace seneca
-{
-	class Guild
-	{
-	private:
-		Character** m_members; // Array of pointers to Character
-		size_t m_count; // Current number of members
-		size_t m_capacity; // Capacity of the array
-		std::string m_name; // Name of the guild
+namespace seneca {
 
-		void resize(); // Resize the array when needed
+    class Guild {
+        // Current number of members
+        size_t m_count;
 
-	public:
-		Guild(); // Default constructor
-		Guild(const char* name); // Constructor with guild name
-		Guild(const Guild& other); // Copy constructor
-		Guild(Guild&& other) noexcept; // Move constructor
-		Guild& operator=(const Guild& other); // Copy assignment
-		Guild& operator=(Guild&& other) noexcept; // Move assignment
-		~Guild(); // Destructor
+        // Capacity of the array
+        size_t m_capacity;
 
-		void addMember(Character* c); // Add member to the guild
-		void removeMember(const std::string& c); // Remove member from the guild
-		Character* operator[](size_t idx) const; // Access member by index
-		void showMembers() const; // Display members of the guild
-	};
-}
+        // Array of pointers to Character
+        Character** m_members;
 
-#endif
+        // Name of the guild
+        std::string m_name;
+
+
+    public:
+        // Default constructor
+        Guild();
+
+        // Constructor with guild name
+        Guild(const char* name);
+
+        // Copy constructor
+        Guild(const Guild& other);
+
+        // Copy assignment operator
+        Guild& operator=(const Guild& other);
+
+
+        // Move constructor
+        Guild(Guild&& other) noexcept;
+
+        // move assignment operator
+        Guild& operator=(Guild&& other) noexcept;
+
+        // Destructor
+        ~Guild();
+
+        // Add member to the guild
+        void addMember(Character* c);
+
+        // Remove member from the guild
+        void removeMember(const std::string& c);
+
+        // Access member by index
+        Character* operator[](size_t idx) const;
+
+        // Display members of the guild
+        void showMembers() const;
+    };
+
+} // namespace seneca
+
+#endif // SENECA_GUILD_H
+

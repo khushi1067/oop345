@@ -1,4 +1,17 @@
 ﻿  guild.cpp
+C:\oop 345 workshops\oop345\workshops\ws02\guild.cpp(117,25): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
   team.cpp
+  tester_1.cpp
+C:\oop 345 workshops\oop345\workshops\ws02\barbarian.h(56,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'tester_1.cpp')
+  C:\oop 345 workshops\oop345\workshops\ws02\barbarian.h(56,24):
+  the template instantiation context (the oldest one first) is
+  	C:\oop 345 workshops\oop345\workshops\ws02\tester_1.cpp(76,62):
+  	see reference to class template instantiation 'seneca::Barbarian<double,seneca::Fireball,seneca::Sword>' being compiled
+  	C:\oop 345 workshops\oop345\workshops\ws02\barbarian.h(50,13):
+  	while compiling class template member function 'int seneca::Barbarian<double,seneca::Fireball,seneca::Sword>::getAttackAmnt(void) const'
+  		C:\oop 345 workshops\oop345\workshops\ws02\barbarian.h(86,24):
+  		see the first reference to 'seneca::Barbarian<double,seneca::Fireball,seneca::Sword>::getAttackAmnt' in 'seneca::Barbarian<double,seneca::Fireball,seneca::Sword>::attack'
+  
   Generating Code...
   ws02.vcxproj -> C:\oop 345 workshops\oop345\workshops\ws02\x64\Debug\ws02.exe

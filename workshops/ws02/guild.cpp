@@ -1,340 +1,208 @@
 #include "guild.h"
-#include "character.h"
 #include <iostream>
-#include <string>
 
-// Default constructor
-seneca::Guild::Guild() {
-    m_members = nullptr;
-    m_count = 0;
-    m_capacity = 0;
-    m_name = "Unnamed Guild";
-}
+namespace seneca {
 
-
-// Constructor with name parameter
-seneca::Guild::Guild(const char* name) {
-    m_members = nullptr;
-    m_count = 0;
-    m_capacity = 0;
-    m_name = name;
-}
-  
-
-// Resize the array when necessary
-void seneca::Guild::resize()
-{
-    size_t newCapacity = (m_capacity == 0) ? 1 : m_capacity * 2; // Double the capacity
-    Character** newMembers = new Character * [newCapacity];
-
-    for (size_t i = 0; i < m_count; ++i)
-    {
-        newMembers[i] = m_members[i]; // Copy existing members
-    }
-
-    delete[] m_members; // Free old array
-    m_members = newMembers; // Point to new array
-    m_capacity = newCapacity; // Update capacity
-}
-
-// Copy constructor
-seneca::Guild::Guild(const Guild& other) {
-    m_count = other.m_count;
-    m_capacity = other.m_capacity;
-    m_name = other.m_name;
-
-    m_members = new Character * [m_capacity];
-    for (size_t i = 0; i < m_count; ++i)
-    {
-        m_members[i] = other.m_members[i]->clone(); // Clone characters
-    }
-}
-
-// Move constructor
-seneca::Guild::Guild(Guild&& other) noexcept {
-    m_members = other.m_members;
-    m_count = other.m_count;
-    m_capacity = other.m_capacity;
-    m_name = std::move(other.m_name);
-
-    other.m_members = nullptr;
-    other.m_count = 0;
-    other.m_capacity = 0;
-}
-
-// Copy assignment operator
-seneca::Guild& seneca::Guild::operator=(const Guild& other)
-{
-    if (this != &other) // Self-assignment check
-    {
-        for (size_t i = 0; i < m_count; ++i)
-        {
-            delete m_members[i]; // Clean up current members
-        }
-        delete[] m_members;
-
-        m_count = other.m_count;
-        m_capacity = other.m_capacity;
-        m_name = other.m_name;
+    //initialize default constructor
+    Guild::Guild() {
+        m_count = 0;
+        m_capacity = 2;
         m_members = new Character * [m_capacity];
-
-        for (size_t i = 0; i < m_count; ++i)
-        {
-            m_members[i] = other.m_members[i]->clone(); // Clone characters
-        }
+        m_name = "";
     }
-    return *this;
-}
+       
+    //parameterized constructor
+    Guild::Guild(const char* name) {
+        m_count = 0;
+        m_capacity=2;
+        m_members = new Character * [m_capacity];
+        m_name = name;
 
-// Move assignment operator
-seneca::Guild& seneca::Guild::operator=(Guild&& other) noexcept
-{
-    if (this != &other) // Self-assignment check
-    {
-        for (size_t i = 0; i < m_count; ++i)
-        {
-            delete m_members[i]; // Clean up current members
-        }
-        delete[] m_members;
-
-        m_members = other.m_members;
+    }
+       
+    //copy constructor
+    Guild::Guild(const Guild& other) {
+        //shallow copy
         m_count = other.m_count;
         m_capacity = other.m_capacity;
-        m_name = std::move(other.m_name);
+        
+        //allocate new memory
+        m_members = new Character * [m_capacity];
+        
+        //deep copy
+        for (size_t i = 0; i < m_count; ++i) {
+            m_members[i] = other.m_members[i];
+        }
+        
+        m_name = other.m_name;
+    }
 
-        other.m_members = nullptr;
+    //copy assignment operator
+    Guild& Guild::operator=(const Guild& other) {
+
+        //check for self assignment
+        if (this != &other) {
+            
+            //delete preciously allocated memory
+            delete[] m_members;
+            
+            //copy
+            m_count = other.m_count;
+            m_capacity = other.m_capacity;
+            
+            //allocate memory
+            m_members = new Character * [m_capacity];
+            
+            //deep copy
+            for (size_t i = 0; i < m_count; ++i) {
+                m_members[i] = other.m_members[i];
+            }
+            m_name = other.m_name;
+        }
+        return *this;
+    }
+
+    //move constructor
+    Guild::Guild(Guild&& other) noexcept 
+
+        //move operation
+        : m_count(other.m_count),
+        m_capacity(other.m_capacity), 
+        m_members(other.m_members), 
+        m_name(other.m_name) {
+        
+        //set previous memory to null
         other.m_count = 0;
         other.m_capacity = 0;
-    }
-    return *this;
-}
-
-// Destructor
-seneca::Guild::~Guild()
-{
-    for (size_t i = 0; i < m_count; ++i)
-    {
-        delete m_members[i]; // Clean up members
-    }
-    delete[] m_members; // Free array
-}
-
-// Add member to the guild
-void seneca::Guild::addMember(Character* c)
-{
-    if (!c) return; // Null check
-
-    for (size_t i = 0; i < m_count; ++i)
-    {
-        if (m_members[i]->getName() == c->getName())
-            return; // Character already in guild
+        other.m_members = nullptr;
+        other.m_name = "";
     }
 
-    if (m_count >= m_capacity)
-    {
-        resize(); // Resize if needed
+    //move assignment operator
+    Guild& Guild::operator=(Guild&& other) noexcept {
+       
+        if (this != &other) {
+            
+            delete[] m_members;
+            
+            m_count = other.m_count;
+            m_capacity = other.m_capacity;
+            m_members = other.m_members;
+            m_name = other.m_name;
+            
+            other.m_count = 0;
+            other.m_capacity = 0;
+            other.m_members = nullptr;
+            other.m_name = "";
+        }
+        return *this;
     }
 
-    m_members[m_count++] = c->clone(); // Add cloned member
-    m_members[m_count - 1]->setHealthMax(m_members[m_count - 1]->getHealthMax() + 300); // Increase health
-}
+    //destructor
+    Guild::~Guild() {
+        delete[] m_members;
+    }
 
-// Remove member from the guild
-void seneca::Guild::removeMember(const std::string& name)
-{
-    for (size_t i = 0; i < m_count; ++i)
-    {
-        if (m_members[i]->getName() == name) // Found member
-        {
-            m_members[i]->setHealthMax(m_members[i]->getHealthMax() - 300); // Decrease health
-            delete m_members[i]; // Delete character
-           
-            m_members[i] = m_members[--m_count]; // Replace with last member
+ 
+    //add memeber to guild
+    void Guild::addMember(Character* c) {
+
+        //loop through members 
+        for (size_t i = 0; i < m_count; ++i) {
+
+            //if memeber exist exit
+            if (m_members[i]->getName() == c->getName()) {
+                return;
+            }
+        }
+
+        //if m_count=m_capacity is full
+        if (m_count == m_capacity) {
+            //resize
+            m_capacity *= 2;
+
+            //allocate memory
+            Character** temp = new Character * [m_capacity];
+            
+            for (size_t i = 0; i < m_count; ++i) {
+                temp[i] = m_members[i];
+            }
+
+            delete[] m_members;
+            m_members = temp;
+        }
+        //set heatthmax + 300
+        c->setHealthMax(c->getHealthMax() + 300);
+        
+        //set health to max health
+        c->setHealth(c->getHealthMax());
+
+        //increment members
+        m_members[m_count++] = c;
+    }
+
+    //remove memebers
+    void Guild::removeMember(const std::string& c) {
+        // Initialize the index 
+        int index = -1;
+       
+        // Search for the member by name
+
+        for (size_t i = 0; i < m_count; ++i) {
+
+            // if Found member
+            if (m_members[i]->getName() == c) {
+
+               // store the index
+                index = i;
+                break;
+            }
+        }
+
+        //// If the member was not found
+        if (index == -1) {
             return;
         }
-    }
-}
 
-// Access member by index
-seneca::Character* seneca::Guild::operator[](size_t idx) const
-{
-    return (idx < m_count) ? m_members[idx] : nullptr;
-}
+        // Adjust the member's health attributes
 
-// Show members of the guild
-void seneca::Guild::showMembers() const
-{
-    std::cout << "[Guild] " << m_name << std::endl;
-    if (m_count == 0)
-    {
-        std::cout << "No guild." << std::endl;
+        m_members[index]->setHealthMax(m_members[index]->getHealthMax() - 300);
+        m_members[index]->setHealth(m_members[index]->getHealthMax());
+        for (size_t i = index; i < m_count - 1; ++i) {
+            m_members[i] = m_members[i + 1];
+        }
+
+        // Decrement the count of members in the guild
+        m_count--;
     }
-    else
-    {
-        for (size_t i = 0; i < m_count; ++i)
+
+
+    Character* Guild::operator[](size_t idx) const {
+        //if idx<m_count
+        if (idx < m_count) {
+            //return
+            return m_members[idx];
+        }
+        else
         {
-            std::cout << "    " << (i + 1) << ": " << *m_members[i] << std::endl;
+            return nullptr;
+        }
+        //return (idx < m_count) ? m_members[idx] : nullptr;
+    }
+
+    void Guild::showMembers() const {
+        //if capacity is 0
+        if (m_capacity == 0) {
+            //print no guild name
+            std::cout << "No guild" << m_name << ".\n";
+            return;
+        }
+        //print
+        std::cout << "[Guild] " << m_name << "\n";
+        
+        for (size_t i = 0; i < m_count; ++i) {
+            std::cout << "    " << i + 1 << ": " << *m_members[i] << "\n";
         }
     }
-}
 
-
-//#include "guild.h"
-//
-//// Default constructor
-//seneca::Guild::Guild() : m_members(nullptr), m_count(0), m_capacity(0), m_name("Unnamed Guild") {}
-//
-//// Constructor with name parameter
-//seneca::Guild::Guild(const char* name) : m_members(nullptr), m_count(0), m_capacity(0), m_name(name) {}
-//
-//// Resize the array when necessary
-//void seneca::Guild::resize()
-//{
-//	size_t newCapacity = (m_capacity == 0) ? 1 : m_capacity * 2; // Double the capacity
-//	Character** newMembers = new Character * [newCapacity];
-//
-//	for (size_t i = 0; i < m_count; ++i)
-//	{
-//		newMembers[i] = m_members[i]; // Copy existing members
-//	}
-//
-//	delete[] m_members; // Free old array
-//	m_members = newMembers; // Point to new array
-//	m_capacity = newCapacity; // Update capacity
-//}
-//
-//// Copy constructor
-//seneca::Guild::Guild(const Guild& other) : m_count(other.m_count), m_capacity(other.m_capacity), m_name(other.m_name)
-//{
-//	m_members = new Character * [m_capacity];
-//	for (size_t i = 0; i < m_count; ++i)
-//	{
-//		m_members[i] = other.m_members[i]->clone(); // Clone characters
-//	}
-//}
-//
-//// Move constructor
-//seneca::Guild::Guild(Guild&& other) noexcept : m_members(other.m_members), m_count(other.m_count), m_capacity(other.m_capacity), m_name(std::move(other.m_name))
-//{
-//	other.m_members = nullptr; // Nullify moved-from object's members
-//	other.m_count = 0; // Nullify count
-//	other.m_capacity = 0; // Nullify capacity
-//}
-//
-//// Copy assignment operator
-//seneca::Guild& seneca::Guild::operator=(const Guild& other)
-//{
-//	if (this != &other) // Self-assignment check
-//	{
-//		for (size_t i = 0; i < m_count; ++i)
-//		{
-//			delete m_members[i]; // Clean up current members
-//		}
-//		delete[] m_members;
-//
-//		m_count = other.m_count;
-//		m_capacity = other.m_capacity;
-//		m_name = other.m_name;
-//		m_members = new Character * [m_capacity];
-//
-//		for (size_t i = 0; i < m_count; ++i)
-//		{
-//			m_members[i] = other.m_members[i]->clone(); // Clone characters
-//		}
-//	}
-//	return *this;
-//}
-//
-//// Move assignment operator
-//seneca::Guild& seneca::Guild::operator=(Guild&& other) noexcept
-//{
-//	if (this != &other) // Self-assignment check
-//	{
-//		for (size_t i = 0; i < m_count; ++i)
-//		{
-//			delete m_members[i]; // Clean up current members
-//		}
-//		delete[] m_members;
-//
-//		m_members = other.m_members; // Transfer ownership
-//		m_count = other.m_count;
-//		m_capacity = other.m_capacity;
-//		m_name = std::move(other.m_name);
-//
-//		other.m_members = nullptr; // Nullify moved-from object's members
-//		other.m_count = 0; // Nullify count
-//		other.m_capacity = 0; // Nullify capacity
-//	}
-//	return *this;
-//}
-//
-//// Destructor
-//seneca::Guild::~Guild()
-//{
-//	for (size_t i = 0; i < m_count; ++i)
-//	{
-//		delete m_members[i]; // Clean up members
-//	}
-//	delete[] m_members; // Free array
-//}
-//
-//// Add member to the guild
-//void seneca::Guild::addMember(Character* c)
-//{
-//	for (size_t i = 0; i < m_count; ++i)
-//	{
-//		if (m_members[i]->getName() == c->getName()) // Check if already in guild
-//			return; // Do nothing if already a member
-//	}
-//
-//	if (m_count >= m_capacity) // Resize if needed
-//	{
-//		resize();
-//	}
-//
-//	m_members[m_count++] = c; // Add new member
-//	c->setHealthMax(c->getHealthMax() + 300); // Increase max health
-//}
-//
-//// Remove member from the guild
-//void seneca::Guild::removeMember(const std::string& c)
-//{
-//	for (size_t i = 0; i < m_count; ++i)
-//	{
-//		if (m_members[i]->getName() == c) // Check for member to remove
-//		{
-//			m_members[i]->setHealthMax(m_members[i]->getHealthMax() - 300); // Decrease max health
-//			delete m_members[i]; // Free character memory
-//			m_members[i] = m_members[m_count - 1]; // Move last member to this position
-//			--m_count; // Reduce count
-//			return;
-//		}
-//	}
-//}
-//
-//// Access member by index
-//seneca::Character* seneca::Guild::operator[](size_t idx) const
-//{
-//	if (idx < m_count)
-//	{
-//		return m_members[idx]; // Return character at index
-//	}
-//	return nullptr; // Return null if out of bounds
-//}
-//
-//// Show members of the guild
-//void seneca::Guild::showMembers() const
-//{
-//	std::cout << "[Guild] " << m_name << std::endl;
-//
-//	if (m_count == 0)
-//	{
-//		std::cout << "No guild." << std::endl;
-//		return;
-//	}
-//
-//	for (size_t i = 0; i < m_count; ++i)
-//	{
-//		std::cout << "    " << (i + 1) << ": " << *m_members[i] << std::endl; // Print member details
-//	}
-//}
+} // namespace seneca
