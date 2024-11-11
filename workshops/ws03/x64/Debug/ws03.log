@@ -1,0 +1,197 @@
+﻿  book.cpp
+  movie.cpp
+C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,20): error C2665: 'seneca::MediaItem::MediaItem': no overloaded function could convert all the argument types
+  C:\oop 345 workshops\oop345\workshops\ws03\mediaItem.h(25,3):
+  could be 'seneca::MediaItem::MediaItem(const std::string &,const std::string &,unsigned short)'
+  	C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,20):
+  	'seneca::MediaItem::MediaItem(const std::string &,const std::string &,unsigned short)': cannot convert argument 2 from 'int' to 'const std::string &'
+  		C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  		Reason: cannot convert from 'int' to 'const std::string'
+  		C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  		'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string': no overloaded function could convert all the argument types
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(2545,5):
+  			could be 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(const _Elem *const )'
+          with
+          [
+              _Elem=char
+          ]
+  				C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  				'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(const _Elem *const )': cannot convert argument 1 from 'int' to 'const _Elem *const '
+          with
+          [
+              _Elem=char
+          ]
+  					C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  					Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(3092,5):
+  			or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(std::initializer_list<_Elem>,const _Alloc &)'
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<char>
+          ]
+  				C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  				'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(std::initializer_list<_Elem>,const _Alloc &)': cannot convert argument 1 from 'int' to 'std::initializer_list<_Elem>'
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<char>
+          ]
+          and
+          [
+              _Elem=char
+          ]
+  					C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  					Conversion requires a second user-defined-conversion operator or constructor
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(2575,5):
+  			or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(_Iter,_Iter,const _Alloc &)'
+          with
+          [
+              _Alloc=std::allocator<char>
+          ]
+  			C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,28):
+  			while trying to match the argument list '(int)'
+  C:\oop 345 workshops\oop345\workshops\ws03\book.cpp(11,20):
+  while trying to match the argument list '(const std::string, int, const std::string)'
+  
+C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,20): error C2665: 'seneca::MediaItem::MediaItem': no overloaded function could convert all the argument types
+  C:\oop 345 workshops\oop345\workshops\ws03\mediaItem.h(25,3):
+  could be 'seneca::MediaItem::MediaItem(const std::string &,const std::string &,unsigned short)'
+  	C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,20):
+  	'seneca::MediaItem::MediaItem(const std::string &,const std::string &,unsigned short)': cannot convert argument 2 from 'int' to 'const std::string &'
+  		C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  		Reason: cannot convert from 'int' to 'const std::string'
+  		C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  		'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string': no overloaded function could convert all the argument types
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(2545,5):
+  			could be 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(const _Elem *const )'
+          with
+          [
+              _Elem=char
+          ]
+  				C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  				'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(const _Elem *const )': cannot convert argument 1 from 'int' to 'const _Elem *const '
+          with
+          [
+              _Elem=char
+          ]
+  					C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  					Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(3092,5):
+  			or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(std::initializer_list<_Elem>,const _Alloc &)'
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<char>
+          ]
+  				C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  				'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(std::initializer_list<_Elem>,const _Alloc &)': cannot convert argument 1 from 'int' to 'std::initializer_list<_Elem>'
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<char>
+          ]
+          and
+          [
+              _Elem=char
+          ]
+  					C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  					Conversion requires a second user-defined-conversion operator or constructor
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(2575,5):
+  			or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(_Iter,_Iter,const _Alloc &)'
+          with
+          [
+              _Alloc=std::allocator<char>
+          ]
+  			C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,28):
+  			while trying to match the argument list '(int)'
+  C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(10,20):
+  while trying to match the argument list '(const std::string, int, const std::string)'
+  
+C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(14,48): error C2039: 'setw': is not a member of 'std'
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\sstream(19,1):
+  see declaration of 'std'
+  
+C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(14,48): error C3861: 'setw': identifier not found
+C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(15,25): error C2039: 'setw': is not a member of 'std'
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\sstream(19,1):
+  see declaration of 'std'
+  
+C:\oop 345 workshops\oop345\workshops\ws03\movie.cpp(15,25): error C3861: 'setw': identifier not found
+  settings.cpp
+  tester_1.cpp
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.h(10,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'tester_1.cpp')
+  
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.h(10,21): error C2143: syntax error: missing ';' before '*'
+  (compiling source file 'tester_1.cpp')
+  
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.h(10,29): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+  (compiling source file 'tester_1.cpp')
+  
+C:\oop 345 workshops\oop345\workshops\ws03\tester_1.cpp(27,1): error C1189: #error:  "The header guard for 'book.h' doesn't follow the convention!"
+  tvShow.cpp
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.h(10,21): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'tvShow.cpp')
+  
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.h(10,21): error C2143: syntax error: missing ';' before '*'
+  (compiling source file 'tvShow.cpp')
+  
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.h(10,29): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+  (compiling source file 'tvShow.cpp')
+  
+C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,20): error C2665: 'seneca::MediaItem::MediaItem': no overloaded function could convert all the argument types
+  C:\oop 345 workshops\oop345\workshops\ws03\mediaItem.h(25,3):
+  could be 'seneca::MediaItem::MediaItem(const std::string &,const std::string &,unsigned short)'
+  	C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,20):
+  	'seneca::MediaItem::MediaItem(const std::string &,const std::string &,unsigned short)': cannot convert argument 2 from 'int' to 'const std::string &'
+  		C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  		Reason: cannot convert from 'int' to 'const std::string'
+  		C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  		'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string': no overloaded function could convert all the argument types
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(2545,5):
+  			could be 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(const _Elem *const )'
+          with
+          [
+              _Elem=char
+          ]
+  				C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  				'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(const _Elem *const )': cannot convert argument 1 from 'int' to 'const _Elem *const '
+          with
+          [
+              _Elem=char
+          ]
+  					C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  					Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(3092,5):
+  			or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(std::initializer_list<_Elem>,const _Alloc &)'
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<char>
+          ]
+  				C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  				'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(std::initializer_list<_Elem>,const _Alloc &)': cannot convert argument 1 from 'int' to 'std::initializer_list<_Elem>'
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<char>
+          ]
+          and
+          [
+              _Elem=char
+          ]
+  					C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  					Conversion requires a second user-defined-conversion operator or constructor
+  			C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\xstring(2575,5):
+  			or       'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::basic_string(_Iter,_Iter,const _Alloc &)'
+          with
+          [
+              _Alloc=std::allocator<char>
+          ]
+  			C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,28):
+  			while trying to match the argument list '(int)'
+  C:\oop 345 workshops\oop345\workshops\ws03\tvShow.cpp(11,20):
+  while trying to match the argument list '(const std::string, int, const std::string)'
+  
+  Generating Code...
