@@ -1,0 +1,16 @@
+﻿  Station.cpp
+  tester_1.cpp
+C:\oop 345 workshops\oop345\workshops\ws04p1\tester_1.cpp(37,22): error C2352: 'seneca::Utilities::setDelimiter': a call of a non-static member function requires an object
+  C:\oop 345 workshops\oop345\workshops\ws04p1\Utilities.h(14,14):
+  see declaration of 'seneca::Utilities::setDelimiter'
+  
+C:\oop 345 workshops\oop345\workshops\ws04p1\tester_1.cpp(39,22): error C2352: 'seneca::Utilities::setDelimiter': a call of a non-static member function requires an object
+  C:\oop 345 workshops\oop345\workshops\ws04p1\Utilities.h(14,14):
+  see declaration of 'seneca::Utilities::setDelimiter'
+  
+C:\oop 345 workshops\oop345\workshops\ws04p1\tester_1.cpp(90,22): error C2352: 'seneca::Utilities::setDelimiter': a call of a non-static member function requires an object
+  C:\oop 345 workshops\oop345\workshops\ws04p1\Utilities.h(14,14):
+  see declaration of 'seneca::Utilities::setDelimiter'
+  
+  Utilities.cpp
+  Generating Code...
