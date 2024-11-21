@@ -1,28 +1,40 @@
-#pragma once
 #ifndef SENECA_SPELLCHECKER_H
 #define SENECA_SPELLCHECKER_H
 
-#include <string>
 #include <iostream>
+#include <string>
+#include "book.h"
+#include "collection.h"
+#include "mediaItem.h"
+#include "movie.h"
+#include "settings.h"
+#include "spellChecker.h"
+#include "tvShow.h"
 
+
+//module to hold parallel array 
 namespace seneca {
+	class SpellChecker {
 
-    // Class responsible for spell checking
-    class SpellChecker {
-        std::string m_badWords[5];   // Fixed array for bad words (demonstration purpose)
-        std::string m_goodWords[5];  // Fixed array for good words (demonstration purpose)
+		//hold misspelled word max-6
+		std::string m_badWords[6];
+		//hold good wors max-6
+		std::string m_goodWords[6];
 
-    public:
-        // Constructor to initialize the SpellChecker with a dictionary file
-        SpellChecker(const std::string& filename);
 
-        // Operator to process the input text and perform spell-checking
-        void operator()(std::string& text) const;
+		size_t m_misCount[6];
 
-        // Show statistics about the spell checking process (e.g., counts)
-        void showStatistics(std::ostream& out) const;
-    };
+	public:
 
+		//hold names of files contain misspleed words
+		SpellChecker(const char* filename);
+
+		//overload operator
+		void operator()(std::string& text);
+
+		//shoe no misspelled 
+		void showStatistics(std::ostream& out) const;
+	};
 }
 
 #endif

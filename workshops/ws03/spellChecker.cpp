@@ -1,63 +1,87 @@
-#pragma once
-
-#include "SpellChecker.h"
-#include <fstream>
-#include <sstream>
 #include <iostream>
-#include <algorithm>
+#include <fstream>
+#include <iomanip>
+#include "book.h"
+#include "collection.h"
+#include "mediaItem.h"
+#include "movie.h"
+#include "settings.h"
+#include "spellChecker.h"
+#include "tvShow.h"
 
-namespace seneca {
+using namespace std;
 
-    // Constructor to initialize SpellChecker with words from a file
-    SpellChecker::SpellChecker(const std::string& filename) {
-        std::ifstream file(filename);
-        std::string line;
-        int i = 0;
+namespace seneca
+{
 
-        // Check if the file was opened successfully
-        if (!file.is_open()) {
-            std::cerr << "Error opening file: " << filename << std::endl;
-            return;
-        }
+	//Constructor that initializes the spell checker
+	SpellChecker::SpellChecker(const char* filename) {
 
-        // Read words from the file and populate the arrays
-        while (std::getline(file, line) && i < 5) {
-            m_goodWords[i] = line;  // Assuming file contains good words
-            ++i;
-        }
+		// // Initialize the misCount array to zero
+		for (size_t i = 0; i < 6; i++) {
+			m_misCount[i] = 0;
+		}
 
-        // Add some bad words for demonstration purposes
-        m_badWords[0] = "misspelled";
-        m_badWords[1] = "definately";
-        m_badWords[2] = "recieve";
-        m_badWords[3] = "teh";
-        m_badWords[4] = "occurence";
-    }
+		// Open the file containing bad and good word pairs
+		std::ifstream file(filename);
 
-    // Operator() for spellchecking text
-    void SpellChecker::operator()(std::string& text) const {
-        // For demonstration: process the text and replace bad words with "corrected"
-        for (size_t i = 0; i < 5; ++i) {
-            size_t pos = 0;
-            while ((pos = text.find(m_badWords[i], pos)) != std::string::npos) {
-                text.replace(pos, m_badWords[i].length(), "corrected");
-                pos += 9; // Move past the replacement word
-            }
-        }
-    }
+		// if the file cannot open throw error
+		if (!file) {
+			throw std::runtime_error("Could not open file: " + std::string(filename));
+		}
 
-    // Show statistics: count bad and good words processed
-    void SpellChecker::showStatistics(std::ostream& out) const {
-        int badCount = 0;
-        int goodCount = 0;
+		size_t i = 0;
+		std::string line;
 
-        for (size_t i = 0; i < 5; ++i) {
-            if (!m_badWords[i].empty()) ++badCount;
-            if (!m_goodWords[i].empty()) ++goodCount;
-        }
+		// Read the bad and good words
+		while (std::getline(file, line)) {
 
-        out << "Bad words: " << badCount << std::endl;
-        out << "Good words: " << goodCount << std::endl;
-    }
+			//if lenghth(words)>6 or empty stop reading
+			if (i >= 6 || line.empty()) {
+				//stop reading break
+				break;
+			}
+
+			// Format: "BAD_WORD GOOD_WORD"
+			std::stringstream ss(line);
+			ss >> m_badWords[i] >> m_goodWords[i];
+			i++;
+		}
+	}
+
+	// Operator() overload
+	void SpellChecker::operator()(std::string& text) {
+
+		// Loop through all bad word pairs
+		for (size_t i = 0; i < 6; i++) {
+			std::string::size_type pos = 0;
+
+			// Find and replace allbad words with good words
+			while ((pos = text.find(m_badWords[i], pos)) != std::string::npos) {
+				//replace bad wiht good words
+				text.replace(pos, m_badWords[i].length(), m_goodWords[i]);
+				pos += m_goodWords[i].length();
+
+				// Increment the count of replacements
+				m_misCount[i]++;
+			}
+		}
+	}
+
+
+	// Displays the spell-check statistics 
+	void SpellChecker::showStatistics(std::ostream& out) const {
+		out << "Spellchecker Statistics\n";
+
+		// replace bad word 
+		for (size_t i = 0; i < 6; i++) {
+
+			//add replacement at bad words
+			out << std::left << std::setw(15) << m_badWords[i] << ": " << m_misCount[i]
+				<< " replacements\n";
+		}
+	}
+
+
+
 }
-

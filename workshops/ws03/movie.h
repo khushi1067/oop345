@@ -1,18 +1,28 @@
-// movie.h
-#ifndef MOVIE_H
-#define MOVIE_H
-
+#ifndef SENECA_MOVIE_H
+#define SENECA_MOVIE_H
 #include <string>
 #include "mediaItem.h"
 
-namespace seneca {
+namespace seneca
+{
     class Movie : public MediaItem {
-        Movie(const std::string& title, int year, const std::string& summary);
-
     public:
+        
+        //default constructor
+        Movie();
+       
+        //constructor and initialization
+        Movie(const std::string& title, 
+            unsigned short year, 
+            const std::string& summary);
+        
+        //display function
         void display(std::ostream& out) const override;
+        
+        //reading data
         static Movie* createItem(const std::string& strMovie);
     };
+
 }
 
 #endif

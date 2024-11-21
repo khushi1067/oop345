@@ -1,52 +1,70 @@
-#pragma once
 #ifndef SENECA_COLLECTION_H
 #define SENECA_COLLECTION_H
-
-#include "mediaItem.h"
 #include <string>
+#include <vector>
+#include "mediaItem.h"
 
-namespace seneca {
-    class Collection {
-        std::string m_name{};
-        MediaItem** m_items{ nullptr }; // array of pointers to MediaItems
-        size_t m_size{ 0 };
-        void (*m_observer)(const Collection&, const MediaItem&) { nullptr };
+namespace seneca
+{
 
-    public:
-        Collection(const std::string& name) : m_name(name) {}
 
-        ~Collection() {
-            for (size_t i = 0; i < m_size; ++i) delete m_items[i];
-            delete[] m_items;
-        }
+	//module to manage a collection of all media items
+	
+	class Collection {
+		//name
+		std::string m_name;
+		std::vector<MediaItem*> m_items;
 
-        void setObserver(void (*observer)(const Collection&, const MediaItem&)) {
-            m_observer = observer;
-        }
+		//observes event 
+		void (*m_observer)(const Collection&, const MediaItem&);
 
-        Collection& operator+=(MediaItem* item) {
-            auto temp = new MediaItem * [m_size + 1];
-            for (size_t i = 0; i < m_size; ++i) temp[i] = m_items[i];
-            temp[m_size] = item;
-            delete[] m_items;
-            m_items = temp;
-            ++m_size;
-            if (m_observer) m_observer(*this, *item);
-            return *this;
-        }
+	public:
 
-        const MediaItem* operator[](const char* title) const;
-        size_t size() const { return m_size; }
+		//sets name of collection to sting 
+		Collection(const std::string& name);
 
-        void display(std::ostream& out) const {
-            for (size_t i = 0; i < m_size; ++i) out << *m_items[i] << "\n";
-        }
-    };
+		//copy constructor prevent copy
+		Collection(const Collection& other) = delete;
 
-    inline std::ostream& operator<<(std::ostream& out, const Collection& col) {
-        col.display(out);
-        return out;
-    }
+		//copy assignment 
+		Collection& operator=(const Collection& other) = delete;
+		
+		//move constructore ptrvent move
+		Collection(Collection&& other) noexcept = delete;
+
+		//move assignment operator
+		Collection& operator=(Collection&& other) noexcept = delete;
+
+		//destructor
+		~Collection();
+
+		// Returns the name of the collection 
+		const std::string& name() const;
+
+		// Returns the size of the collection 
+		size_t size() const;
+
+		void setObserver(void (*observer)(const Collection&, const MediaItem&));
+
+
+		// operator overload to add item
+		Collection& operator+=(MediaItem* item);
+
+		//get media item from collection by index
+		MediaItem* operator[](size_t idx) const;
+
+		//get media item from collection by title
+		MediaItem* operator[](const std::string& title) const;
+
+		// Removes quotes
+		void removeQuotes();
+
+		// Sorts the collection
+		void sort(const std::string& field);
+	};
+
+	std::ostream& operator<<(std::ostream& os, const Collection& collection);
+
 }
 
 #endif

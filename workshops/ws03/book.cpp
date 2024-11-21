@@ -1,51 +1,121 @@
-// book.cpp
-#include "mediaItem.h"
-#include "book.h"
-#include "settings.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
 #include <sstream>
 #include <iomanip>
-#include <stdexcept>
+#include "book.h"
+#include "collection.h"
+#include "mediaItem.h"
+#include "movie.h"
+#include "settings.h"
+#include "spellChecker.h"
+#include "tvShow.h"
+using namespace std;
+
 
 namespace seneca {
-    Book::Book(const std::string& author, const std::string& title, const std::string& country,
-        double price, int year, const std::string& summary)
-        : MediaItem(title, year, summary), m_author(author), m_country(country), m_price(price) {}
+  
+    //display function
+    void Book::display(std::ostream& out) const
+    {
+        {
+            if (g_settings.m_tableView)
+            {
+                out << "B | ";
+                out << std::left << std::setfill('.');
+                out << std::setw(50) << this->getTitle() << " | ";
+                out << std::right << std::setfill(' ');
+                out << std::setw(2) << this->m_country << " | ";
+                out << std::setw(4) << this->getYear() << " | ";
+                out << std::left;
+                if (g_settings.m_maxSummaryWidth > -1)
+                {
+                    if (static_cast<short>(this->getSummary().size()) <= g_settings.m_maxSummaryWidth)
+                        out << this->getSummary();
+                    else
+                        out << this->getSummary().substr(0, g_settings.m_maxSummaryWidth - 3) << "...";
+                }
+                else
+                    out << this->getSummary();
+                out << std::endl;
+            }
+            else
+            {
+                size_t pos = 0;
+                out << this->getTitle() << " [" << this->getYear() << "] [";
+                out << m_author << "] [" << m_country << "] [" << m_price << "]\n";
+                out << std::setw(this->getTitle().size() + 7) << std::setfill('-') << "" << '\n';
+                while (pos < this->getSummary().size())
+                {
+                    out << "    " << this->getSummary().substr(pos, g_settings.m_maxSummaryWidth) << '\n';
+                    pos += g_settings.m_maxSummaryWidth;
+                }
+                out << std::setw(this->getTitle().size() + 7) << std::setfill('-') << ""
+                    << std::setfill(' ') << '\n';
+            }
+        }
 
-    void Book::display(std::ostream& out) const {
-        if (g_settings.m_tableView) {
-            out << "B | " << std::left << std::setw(50) << getTitle() << " | "
-                << std::setw(2) << m_country << " | "
-                << std::setw(4) << getYear() << " | " << getSummary().substr(0, g_settings.m_maxSummaryWidth) << "\n";
-        }
-        else {
-            out << getTitle() << " [" << getYear() << "] [" << m_author << "] [" << m_country << "] [" << m_price << "]\n";
-        }
     }
 
-    Book* Book::createItem(const std::string& strBook) {
-        if (strBook.empty() || strBook[0] == '#')
-            throw std::invalid_argument("Not a valid book.");
-        std::istringstream stream(strBook);
-        std::string author, title, country, priceStr, yearStr, summary;
-        double price;
-        int year;
 
-        std::getline(stream, author, ',');
-        std::getline(stream, title, ',');
-        std::getline(stream, country, ',');
-        std::getline(stream, priceStr, ',');
-        std::getline(stream, yearStr, ',');
-        std::getline(stream, summary);
+    //default constructor 
+    Book::Book()
+        : MediaItem("", "", 0),
+        m_author(""),
+        m_country(""),
+        m_price(0) {}
 
-        author.erase(0, author.find_first_not_of(" "));
-        title.erase(0, title.find_first_not_of(" "));
-        country.erase(0, country.find_first_not_of(" "));
-        price = std::stod(priceStr);
-        year = std::stoi(yearStr);
 
-        return new Book(author, title, country, price, year, summary);
+    Book* Book::createItem(const std::string& strBook)
+    {
+        //if string is empty or starts wit #
+        if (strBook.empty() || strBook[0] == '#') {
+            //throw exception
+            throw "Not a valid book.";
+        }
+
+        std::string temp = strBook;
+        size_t pos = 0;
+
+        // AUTHOR
+        //use , as deliminator
+        pos = temp.find(',');
+        //extract string
+        std::string strAuthor = temp.substr(0, pos);
+        //remove white spaces
+        MediaItem::trim(strAuthor);
+        //update string
+        temp = temp.substr(pos + 1);
+
+        // TITLE
+        pos = temp.find(',');
+        std::string strTitle = temp.substr(0, pos);
+        MediaItem::trim(strTitle);
+        temp = temp.substr(pos + 1);
+
+        // COUNTRY
+        pos = temp.find(',');
+        std::string strCountry = temp.substr(0, pos);
+        MediaItem::trim(strCountry);
+        temp = temp.substr(pos + 1);
+
+        // PRICE
+        pos = temp.find(',');
+        std::string strPrice = temp.substr(0, pos);
+        double price = std::stod(strPrice);
+        temp = temp.substr(pos + 1);
+
+        // YEAR
+        pos = temp.find(',');
+        std::string strYear = temp.substr(0, pos);
+        unsigned short year = static_cast<unsigned short>(std::stoi(strYear));
+        temp = temp.substr(pos + 1);
+
+        // SUMMARY
+        MediaItem::trim(temp);
+        std::string summary = temp;
+
+        // return Book instance
+        return new Book(strTitle, summary, year, strAuthor, strCountry, price);
     }
 }
-
-
-

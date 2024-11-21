@@ -1,46 +1,151 @@
-#pragma once
-#include "Collection.h"
-#include "Book.h"
-#include "Movie.h"
-#include "TVShow.h"
-#include <fstream>
 #include <iostream>
+#include <algorithm>
+#include "book.h"
+#include "collection.h"
+#include "mediaItem.h"
+#include "movie.h"
+#include "settings.h"
+#include "spellChecker.h"
+#include "tvShow.h"
 
-void Collection::addItem(MediaItem* item) {
-    m_items.push_back(item);
-}
+namespace seneca
+{
 
-void Collection::display() const {
-    for (const auto& item : m_items) {
-        item->display();
-    }
-}
+    //sets name, initialize 
+    Collection::Collection(const std::string& name)
+        : m_name{ name }, 
+        m_observer{ nullptr } {}
 
-void Collection::searchByTitle(const std::string& title) const {
-    for (const auto& item : m_items) {
-        if (item->getTitle() == title) {
-            item->display();
-            return;
+    //destructor
+    Collection::~Collection() {
+        for (auto item : m_items) {
+            delete item;
         }
     }
-    std::cout << "Item not found." << std::endl;
-}
 
-void Collection::loadFromCSV(const std::string& filename) {
-    std::ifstream file(filename);
-    std::string line;
+    //return name 
+    const std::string& Collection::name() 
+        const { return m_name; }
 
-    while (std::getline(file, line)) {
-        if (line.empty() || line[0] == '#') continue;
+    //return size
+    size_t Collection::size() const { 
+        return m_items.size(); 
+    }
 
-        if (line.starts_with("Book")) {
-            m_items.push_back(Book::createItem(line));
+    //get item by index
+    MediaItem* Collection::operator[](size_t idx) const {
+        if (idx >= m_items.size()) {
+            std::string msg = "Bad index " + std::to_string(idx) + " Collection has " +
+                std::to_string(m_items.size()) + " items.";
+            throw std::out_of_range(msg);
         }
-        else if (line.starts_with("Movie")) {
-            m_items.push_back(Movie::createItem(line));
+        return m_items[idx];
+    }
+
+    //get item by title
+    MediaItem* Collection::operator[](const std::string& title) const {
+        auto it =
+            std::find_if(m_items.begin(), m_items.end(), [title](MediaItem* item) {
+            return item->getTitle() == title;
+                });
+        return it != m_items.end() ? *it : nullptr;
+    }
+
+    //trim quotes
+    void trimQuotes(std::string& str) {
+        if (str.front() == '\"') {
+            str = str.substr(1, str.size() - 1);
         }
-        else if (line.starts_with("TVShow")) {
-            m_items.push_back(TvShow::createItem(line));
+        if (str.back() == '\"') {
+            str = str.substr(0, str.size() - 1);
+        }
+
+
+
+
+
+
+
+    }
+
+
+    //
+    void Collection::setObserver(void (*observer)(const Collection&,
+        const MediaItem&)) {
+        m_observer = observer;
+    }
+
+    //add item 
+    Collection& Collection::operator+=(MediaItem* item) {
+
+
+
+
+
+
+        for (auto m_item : m_items) {
+            if (m_item->getTitle() == item->getTitle()) {
+                delete item;
+                return *this;
+            }
+        }
+
+        m_items.push_back(item);
+        if (m_observer) {
+            m_observer(*this, *item);
+        }
+
+        return *this;
+    }
+
+   
+
+    //remove quotes
+    void Collection::removeQuotes() {
+        std::for_each(m_items.begin(), m_items.end(), [](MediaItem* item) {
+            // For Title
+            std::string title = item->getTitle();
+            trimQuotes(title);
+            item->setTitle(title);
+
+            // For Summary
+            std::string summary = item->getSummary();
+            trimQuotes(summary);
+            item->setSummary(summary);
+            });
+    }
+
+
+    //sore the items of collection
+    void Collection::sort(const std::string& field) {
+        if (field == "title") {
+            std::sort(m_items.begin(), m_items.end(), [](MediaItem* a, MediaItem* b) {
+                // in ascending order
+                return a->getTitle() < b->getTitle();
+                });
+        }
+        else if (field == "summary") {
+            std::sort(m_items.begin(), m_items.end(), [](MediaItem* a, MediaItem* b) {
+                // in ascending order
+                return a->getSummary() < b->getSummary();
+                });
+        }
+        else if (field == "year") {
+            std::sort(m_items.begin(), m_items.end(), [](MediaItem* a, MediaItem* b) {
+                // in ascending order
+                return a->getYear() < b->getYear();
+                });
         }
     }
+
+
+    //operator overload
+    std::ostream& operator<<(std::ostream& os, const Collection& collection) {
+        for (size_t i = 0; i < collection.size(); i++) {
+            collection[i]->display(os);
+        }
+
+        return os;
+    }
+
 }
