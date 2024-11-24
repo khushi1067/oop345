@@ -1,40 +1,64 @@
-#include "Utilities.h"
-#include <string>
 #include <iostream>
+#include <sstream>
+#include <algorithm>
+#include "Utilities.h"
 
-namespace seneca {
+namespace seneca
+{
+	char Utilities::m_delimiter{};
 
-    Utilities::Utilities() : m_delimiter(','), m_widthField(1) {}
+	void Utilities::setFieldWidth(size_t newWidth)
+	{
+		m_widthField = newWidth;
+	}
 
-    void Utilities::setDelimiter(char newDelimiter) {
-        m_delimiter = newDelimiter;
-    }
+	size_t Utilities::getFieldWidth() const
+	{
+		return m_widthField;
+	}
 
-    std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more) {
-        std::string token;
-        size_t start_pos = next_pos;
+	std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more)
+	{
 
-        while (next_pos < str.size() && str[next_pos] != m_delimiter) {
-            token += str[next_pos++];
-        }
+		size_t find = str.find(m_delimiter, next_pos);
 
-        if (next_pos < str.size() && str[next_pos] == m_delimiter) {
-            next_pos++; // Skip the delimiter
-        }
+		if (find == next_pos)
+		{
+			more = false;
+			throw "No token until delimiter";
+		}
 
-        if (token.empty()) {
-            more = false;
-        }
+		std::string token = str.substr(next_pos, find - next_pos);
+		next_pos = find + 1;
 
-        if (token.size() > m_widthField) {
-            m_widthField = token.size();
-        }
+		//size_t length = str.length();
+		if (find == std::string::npos)
+		{
+			more = false;
+		}
+		else
+		{
+			if (!token.empty())	more = true;
+		}
 
-        return token;
-    }
+		token.erase(0, token.find_first_not_of(' '));
+		token.erase(token.find_last_not_of(' ') + 1);
 
-    size_t Utilities::getFieldWidth() const {
-        return m_widthField;
-    }
+		m_widthField = (m_widthField < token.size()) ? token.size() : m_widthField;
 
-} // namespace seneca
+
+
+
+		return token;
+	}
+
+	void Utilities::setDelimiter(char newDelimiter)
+	{
+		m_delimiter = newDelimiter;
+	}
+
+	char Utilities::getDelimiter()
+	{
+		return m_delimiter;
+	}
+}

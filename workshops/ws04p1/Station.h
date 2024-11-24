@@ -1,34 +1,45 @@
 #ifndef SENECA_STATION_H
 #define SENECA_STATION_H
-
 #include <string>
-#include <iostream>
 
-namespace seneca {
+namespace seneca
+{
+	class Station
+	{
+		int m_id{};
+		std::string m_name{};
+		std::string m_desc{};
+		unsigned int m_serial{};
+		size_t m_stock{};
 
-    class Utilities;  // Forward declaration to avoid circular dependency
+		static size_t m_widthField;
+		static size_t id_generator;
 
-    class Station {
-        int m_id;
-        std::string m_itemName;
-        std::string m_description;
-        size_t m_serialNumber;
-        size_t m_quantity;
+	public:
+		Station();
+		Station(const std::string& record);
+		~Station();
 
-        static size_t m_widthField;
-        static int id_generator;
+		// returns the name of the current Station object
+		const std::string& getItemName() const;
 
-    public:
-        // Custom constructor
-        Station(const std::string& record);
+		// returns the next serial number to be used on the assembly line and increments m_serialNumber
+		size_t getNextSerialNumber();
 
-        const std::string& getItemName() const;
-        size_t getNextSerialNumber();
-        size_t getQuantity() const;
-        void updateQuantity();
-        void display(std::ostream& os, bool full) const;
-    };
+		// returns the remaining quantity of items in the Station object
+		size_t getQuantity() const;
 
-} // namespace seneca
+		// subtracts 1 from the available quantity; should not drop below 0.
+		void updateQuantity();
+
+		// inserts information about the current object into stream os.
+		void display(std::ostream& os, bool full) const;
+
+
+	};
+
+
+}
 
 #endif
+

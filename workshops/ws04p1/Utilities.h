@@ -1,21 +1,33 @@
 #ifndef SENECA_UTILITIES_H
 #define SENECA_UTILITIES_H
 
-#include <string>
+namespace seneca
+{
+	class Utilities
+	{
+		size_t m_widthField{ 1 };
+		static char m_delimiter;
 
-namespace seneca {
+	public:
+		// sets the field width of the current object to the value of parameter newWidth
+		void setFieldWidth(size_t newWidth);
 
-    class Utilities {
-        char m_delimiter;
-        size_t m_widthField;
+		// returns the field width of the current object
+		size_t getFieldWidth() const;
 
-    public:
-        Utilities();
-        void setDelimiter(char newDelimiter);
-        std::string extractToken(const std::string& str, size_t& next_pos, bool& more);
-        size_t getFieldWidth() const;
-    };
+		// extracts a token from string str referred to by the first parameter.
+		std::string extractToken(const std::string& str, size_t& next_pos, bool& more);
 
-} // namespace seneca
+		// class function
+		// sets the delimiter for this class to the character received
+		static void setDelimiter(char newDelimiter);
+
+		// returns the delimiter for this class.
+		static char getDelimiter();
+	};
+
+}
 
 #endif
+
+
