@@ -1,80 +1,89 @@
 #include <iostream>
-#include <vector>
+#include <string>
 #include <iomanip>
 #include "Station.h"
 #include "Utilities.h"
 
-namespace seneca
-{
-	size_t Station::m_widthField{ 0 };
-	size_t Station::id_generator{ 0 };
+namespace seneca {
 
-	Station::Station()
-	{
-	}
 
-	Station::Station(const std::string& record)
-	{
-		id_generator++;
+	//stock uqnatity
+	size_t Station::m_widthField = 0;
+
+	//generat idssigneed to item at station
+	size_t Station::id_generator = 0;
+
+	Station::Station(const std::string& str) {
+		//use utilities obj
 		Utilities util;
+
+		size_t next_pos = 0;
+		
 		bool more = true;
-		size_t pos = 0u;
-		std::vector<std::string> tokens;
 
-		while (more)
-		{
-			if (tokens.size() == 3 && m_widthField < util.getFieldWidth())
-			{
-				m_widthField = util.getFieldWidth();
-			}
-			tokens.push_back(util.extractToken(record, pos, more));
+		//extract data  use delimiter
+
+		//extract name
+		m_name = util.extractToken(str, next_pos, more);
+		
+		////extract  serial number
+		m_serialNumber = std::stoul(util.extractToken(str, next_pos, more));
+	
+		//extract  quantity in stock
+		m_qtyInStock = std::stoul(util.extractToken(str, next_pos, more));
+
+		//update m_widthField to max m_widthField
+		if (m_widthField < util.getFieldWidth()) {
+			m_widthField = util.getFieldWidth();
 		}
 
-		m_id = id_generator;
-		m_name = tokens[0];
-		m_serial = std::stoi(tokens[1]);
-		m_stock = std::stoi(tokens[2]);
-		m_desc = tokens[3];
+		//extract  description
+		m_desc = util.extractToken(str, next_pos, more);
 
+		//increment id
+		m_id = ++id_generator;
 	}
 
-
-	Station::~Station()
-	{
+	size_t Station::getId() const {
+		//return id
+		return m_id;
 	}
 
-	const std::string& Station::getItemName() const
-	{
+	const std::string& Station::getItemName() const {
+
+		//return name of current station
 		return m_name;
-		// TODO: insert return statement here
 	}
 
-	size_t Station::getNextSerialNumber()
-	{
-		return m_serial++;
+	size_t Station::getNextSerialNumber() {
+		//return next serial number increment current serial number
+		return m_serialNumber++;
 	}
 
-	size_t Station::getQuantity() const
-	{
-		return m_stock;
+	size_t Station::getQuantity() const {
+		//return remaining quantity
+		return m_qtyInStock;
 	}
 
-	void Station::updateQuantity()
-	{
-		if (m_stock > 0)
-		{
-			m_stock--;
+	void Station::updateQuantity() {
+		//update quantity 
+		//subtract 1 quantity quantity max=0
+		if (m_qtyInStock > 0) {
+			--m_qtyInStock;
 		}
 	}
 
-	void Station::display(std::ostream& os, bool full) const
-	{
-		os << std::setfill('0') << std::setw(3) << m_id << " | " << std::left << std::setfill(' ') << std::setw(m_widthField) << m_name << " | " << std::right << std::setfill('0') << std::setw(6) << m_serial << " | ";
-
-		if (full)
-		{
-			os << std::right << std::setfill(' ') << std::setw(4) << m_stock << " | " << m_desc;
+	//display function
+	void Station::display(std::ostream& os, bool full) const {
+		// `ID | NAME | SERIAL | `
+		os << std::setw(3) << std::right << std::setfill('0') << m_id << " | "
+			<< std::setw(m_widthField) << std::setfill(' ') << std::left << m_name << " | "
+			<< std::setw(6) << std::setfill('0') << std::right << m_serialNumber << " | ";
+		if (full) {
+			os << std::setw(4) << std::setfill(' ') << m_qtyInStock << " | "
+				<< m_desc;
 		}
 		os << std::endl;
 	}
-}
+
+} // namespace seneca

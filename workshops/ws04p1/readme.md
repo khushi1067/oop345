@@ -121,7 +121,8 @@ The `Utilities` class has the following structure:
 
 ## `Station` Module
 
-The `Station` module manages information about a station on the assembly line, which holds a specific item and fills customer orders.
+The `Station` module manages information about a station on the assembly line, which holds a specific
+item and fills customer orders.
 
 The `Station` class has the following structure:
 

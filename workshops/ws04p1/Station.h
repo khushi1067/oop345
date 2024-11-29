@@ -1,45 +1,63 @@
 #ifndef SENECA_STATION_H
 #define SENECA_STATION_H
+
 #include <string>
 
-namespace seneca
-{
-	class Station
-	{
-		int m_id{};
-		std::string m_name{};
-		std::string m_desc{};
-		unsigned int m_serial{};
-		size_t m_stock{};
+namespace seneca {
 
+	//mange station on assembly line
+	//hold item, fill customer order
+
+
+	class Station {
+
+		//store station id
+		size_t m_id{};
+
+		//name
+		std::string m_name{ "" };
+		
+		//description station
+		std::string m_desc{ "" };
+
+		//serial number assigneed to item at station
+		size_t m_serialNumber{};
+
+		//stock uqnatity
+		size_t m_qtyInStock{};
+
+		//print screen item
 		static size_t m_widthField;
+
+		//generat id
 		static size_t id_generator;
-
 	public:
-		Station();
-		Station(const std::string& record);
-		~Station();
 
-		// returns the name of the current Station object
+		//default constructor
+		Station() = default;
+
+		//constructor with str argu
+		Station(const std::string& str);
+
+
+		size_t getId() const;
+		
+		//return name of current station
 		const std::string& getItemName() const;
 
-		// returns the next serial number to be used on the assembly line and increments m_serialNumber
+		//returns serial number 
 		size_t getNextSerialNumber();
 
-		// returns the remaining quantity of items in the Station object
+		//returns remaining quantity
 		size_t getQuantity() const;
 
-		// subtracts 1 from the available quantity; should not drop below 0.
+		//subtract 1 from available quantity min=0
 		void updateQuantity();
 
-		// inserts information about the current object into stream os.
+		//display function
 		void display(std::ostream& os, bool full) const;
-
-
 	};
 
+} // namespace seneca
 
-}
-
-#endif
-
+#endif // !SENECA_STATION_H
