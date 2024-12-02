@@ -1,7 +1,16 @@
+/*
+	Name: Khushi Abhay Bhandari
+	Email-kabhandari@myseneca.ca
+	Student ID: 106774235
+	Date: 01/12/2024
+*/
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include "Workstation.h"
 #include "Station.h"
+#include "CustomerOrder.h"
+#include "LineManager.h"
 #include "Utilities.h"
 
 namespace seneca {

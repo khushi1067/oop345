@@ -1,5 +1,17 @@
-#include "LineManager.h"
+/*
+    Name: Khushi Abhay Bhandari
+    Email-kabhandari@myseneca.ca
+    Student ID: 106774235
+    Date: 01/12/2024
+*/
+
 #include <sstream>
+#include "Workstation.h"
+#include "Station.h"
+#include "CustomerOrder.h"
+#include "LineManager.h"
+#include "Utilities.h"
+
 
 namespace seneca {
 
@@ -87,7 +99,7 @@ namespace seneca {
         
 
         //print -`Line Manager Iteration: COUNT<endl>`
-        os << "Line Manager Iteration: " << iteration << std::endl;
+       os << "Line Manager Iteration: " << iteration << std::endl;
        
         //if oreders are pending 
         if (!g_pending.empty()) {

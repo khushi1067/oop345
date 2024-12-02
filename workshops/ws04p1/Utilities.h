@@ -1,3 +1,9 @@
+/*
+	Name: Khushi Abhay Bhandari
+	Email-kabhandari@myseneca.ca
+	Student ID: 106774235
+	Date: 01/12/2024
+*/
 #ifndef SENECA_UTILITIES_H
 #define SENECA_UTILITIES_H
 

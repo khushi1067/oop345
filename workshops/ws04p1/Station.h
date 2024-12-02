@@ -1,6 +1,12 @@
 #ifndef SENECA_STATION_H
 #define SENECA_STATION_H
 
+/*
+	Name: Khushi Abhay Bhandari
+	Email-kabhandari@myseneca.ca
+	Student ID: 106774235
+	Date: 01/12/2024
+*/
 #include <string>
 
 namespace seneca {
